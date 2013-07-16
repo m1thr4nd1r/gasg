@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> F </title>
+        <title> Striga </title>
     </head>
     <body>
     	<form action="index.php" method="post">
