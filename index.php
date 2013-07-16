@@ -7,6 +7,7 @@
         <title> Striga </title>
     </head>
     <body>
+        <section><h1>Primeira tag HTML5</h1></section>
     	<form action="index.php" method="post">
         String: <input type="text" name="msg">
         <input type="submit">
