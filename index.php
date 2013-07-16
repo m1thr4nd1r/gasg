@@ -1,3 +1,3 @@
 <?php
-echo "Oi";
+http_redirect('teste.php');
 ?>
