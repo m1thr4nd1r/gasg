@@ -1,3 +1,3 @@
 <?php
-http_redirect('teste.php');
+header( 'Location:teste.php' ) ;
 ?>
