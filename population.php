@@ -6,8 +6,8 @@ class Population
 {
 
 	public static $size = 4;
-    public $nodes = new array();
-    public $fit_percent = new array();
+    public $nodes = array();
+    public $fit_percent = array();
     public $fit_goal;
     public $fit_total;
 

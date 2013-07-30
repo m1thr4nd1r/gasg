@@ -20,7 +20,7 @@ function processIO($value)
     $population->pop[0]->write();
     echo "Geracao: " . count . " Fitness: " . $population->pop[0]->fitness . "/n";
     
-    echo "------------------------- /n  Configuracao Final /n"
+    echo "------------------------- /n  Configuracao Final /n";
 
     echo $population->pop[0]->text;
     
@@ -34,7 +34,7 @@ function reproduce($x,$y)
     $c = rand(Node::$s_size);
     
     for ($i = 0; $i < Node::$s_size; $i++)
-        $child->[$i] = ($i < $c+1)? $x->board[$i] : $y->board[$i]; 
+        $child->text[$i] = ($i < $c+1)? $x->board[$i] : $y->board[$i]; 
         
     return $child;
 }
@@ -51,7 +51,7 @@ function random_selection($p, $X, $Y)
             $X = $p->pop[3];
         else if ($percent_X < ($p->fit_percent[2] + $p->fit_percent[3]))  
             $X = $p->pop[2];
-        else if ($percent_X < $p->fit_percent[1] + $p->fit_percent[2] + $p->fit_percent[3]))  
+        else if ($percent_X < $p->fit_percent[1] + $p->fit_percent[2] + $p->fit_percent[3])  
             $X = $p->pop[1];
         else 
             $X = $p->pop[0];
@@ -92,7 +92,8 @@ function GA($pop)
 
 		for ($i = 0; $i < Population::$size; $i++)
         {
-            $X = NULL, $Y = NULL;
+            $X = NULL;
+            $Y = NULL;
             random_selection($p,$X,$Y);
             $child = reproduce($X,$Y);
             
