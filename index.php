@@ -14,7 +14,7 @@
         </form>
         <?php
         	if (isset($_POST['msg'])){
-				Pop($_POST['msg']);
+				ga($_POST['msg']);
 			}
         ?>
     </body>
