@@ -4,14 +4,11 @@ include "population.php";
 
 function processIO($value)
 {
-	
-	Node::s_size = count($value);
-
 	$population = NULL;
     
-    $population = new Population();
+    $population = new Population($value);
     
-    $population->start();
+    $population->start($value);
     
     $population->order();
     
@@ -27,13 +24,15 @@ function processIO($value)
     return 0;	
 }
 
-function reproduce($x,$y)
+function reproduce($x,$y,$msg)
 {
     $child = new Node();
     
-    $c = rand(Node::$s_size);
+    $size = count($msg)
+
+    $c = rand($size);
     
-    for ($i = 0; $i < Node::$s_size; $i++)
+    for ($i = 0; $i < $size; $i++)
         $child->text[$i] = ($i < $c+1)? $x->board[$i] : $y->board[$i]; 
         
     return $child;
@@ -75,7 +74,7 @@ function random_selection($p, $X, $Y)
     }
 }
 
-function GA($pop)
+function GA($pop, $msg)
 {	
 	$gen = 0;
 	$mutationR = 0.015;
@@ -87,7 +86,7 @@ function GA($pop)
 		$gen++;
 		echo $pop->nodes[0]->text . "Geracao: " . $gen . " Fitness: " . $pop->nodes[0]->fitness . "\n";
 
-		$new_pop = new Population();
+		$new_pop = new Population($msg);
 		$child = NULL;
 
 		for ($i = 0; $i < Population::$size; $i++)
@@ -95,17 +94,19 @@ function GA($pop)
             $X = NULL;
             $Y = NULL;
             random_selection($p,$X,$Y);
-            $child = reproduce($X,$Y);
+            $child = reproduce($X,$Y,$msg);
             
             $new_p->pop[$i] = $child;
         }
         
+        $size = count($msg);
+
         for ($i = 0; $i < Population::$size; $i++)
-            for ($j = 0; $j < Node::$s_size; $j++)
+            for ($j = 0; $j < $size; $j++)
             {
                 $chance = (float) rand() / getrandmax();
                 if($chance < $mutationR)
-                    $new_p->pop[$i]->text[$j] = rand(Node::s_size);
+                    $new_p->pop[$i]->text[$j] = rand($size);
             }
         
         $new_p->update();
@@ -114,7 +115,7 @@ function GA($pop)
         
         order($pop);
         
-    }while($p->pop[0]->fitness < Node::s_size);
+    }while($p->pop[0]->fitness < $size);
 
     return $generation;
 }
