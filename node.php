@@ -2,35 +2,24 @@
 
 class Node
 {
-	public static const $b_size = 8;
+	public static $s_size;
     public $fitness;
-    public $board[Node::$b_size];
+    public $text;
 
 	function __construct()
 	{
-	    for ($i = 0; $i < Node::$b_size; $i++)
-	        $this->board[$i] = rand() % Node::$b_size;
+        $this->text = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, strlen($msg));
 	    $this->fitness = -1;
 	}
 
-	function print()
+	function calculaFitness($individual)
 	{
-	    for ($i = 0; $i < Node::$b_size; $i++)
-	    {
-	        for ($j = 0; $j < Node::$b_size; $j++)
-	            if ($this->board[$j] == $i)
-	                echo " 1 ";
-	            else
-	                echo " 0 ";
-	        echo "\n";
-	    }
-	    echo "\n";
-	}
-
-	function write()
-	{
-	    for ($i = 0; $i < Node::$b_size; $i++)
-	        echo " " . $this->board[$i] . " ";
+	    $sum = 0;
+	    for ($i = 0; $i < Node::$s_size - 1; $i++)
+	        for ($j = $i+1; $j < Node::$s_size; $j++)
+	            if ($individual->text[$i] != $text[$i])
+                    $sum++;
+	    return $sum;
 	}
 }
 
