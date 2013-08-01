@@ -12,7 +12,7 @@ function processIO($value)
     
     $population->order();
     
-    $count = GA($population) + 1;
+    $count = GA($population, $value) + 1;
     
     $population->pop[0]->write();
     echo "Geracao: " . count . " Fitness: " . $population->pop[0]->fitness . "/n";
