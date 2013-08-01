@@ -28,7 +28,7 @@ function reproduce($x,$y,$msg)
 {
     $child = new Node();
     
-    $size = count($msg)
+    $size = count($msg);
 
     $c = rand($size);
     

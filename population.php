@@ -18,7 +18,7 @@ class Population
 	        $this->fit_percent[$i] = 0;
 	    }
 	    
-	    $this->fit_goal = count($msg);
+	    $this->fit_goal = strlen($msg);
 	    $this->fit_total = 0;
 	}
 
@@ -27,7 +27,7 @@ class Population
 	    for ($i = 0; $i < Population::$size; $i++)
 	    {
 	        $this->nodes[$i] = new Node($msg);
-	        $this->nodes[$i]->fitness = $this->calculaFitness($nodes[$i]);
+	        $this->nodes[$i]->calculaFitness($msg);
 	        $this->fit_total += $this->nodes[$i]->fitness;
 	    }
 	    for ($i = 0; $i < Population::$size; $i++)

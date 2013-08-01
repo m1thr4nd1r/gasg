@@ -11,15 +11,14 @@ class Node
 	    $this->fitness = -1;
 	}
 
-	function calculaFitness($individual)
+	function calculaFitness($text)
 	{
-	    $sum = 0;
-	    $size = count($text);
-	    for ($i = 0; $i < $size - 1; $i++)
-	        for ($j = $i+1; $j < $size; $j++)
-	            if ($individual->text[$i] != $text[$i])
-                    $sum++;
-	    return $sum;
+	    $this->fitness = 0;
+	    $size = strlen($text);
+	    for ($i = 0; $i < $size; $i++)
+	        for ($j = 0; $j < $size; $j++)
+	            if ($this->text[$i] != $text[$j])
+                    $this->fitness++;
 	}
 }
 
