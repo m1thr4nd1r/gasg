@@ -1,4 +1,4 @@
-<?php include "striga.php"; ?>
+<? include "striga.php"; ?>
 
 <!DOCTYPE html>
 <html>
