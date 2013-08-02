@@ -7,7 +7,6 @@ class Population
 	public static $size = 4;
     public $nodes = array();
     public $fit_percent = array();
-    public $fit_goal;
     public $fit_total;
 
 	function __construct($size)
