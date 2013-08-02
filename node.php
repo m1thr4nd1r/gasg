@@ -5,9 +5,9 @@ class Node
 	public $fitness;
     public $text;
 
-	function __construct($msg)
+	function __construct($target)
 	{
-        $this->text = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, strlen($msg));
+        $this->text = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, strlen($target));
 	    $this->fitness = -1;
 	}
 

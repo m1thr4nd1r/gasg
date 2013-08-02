@@ -10,7 +10,7 @@ class Population
     public $fit_goal;
     public $fit_total;
 
-	function __construct($msg)
+	function __construct($size)
 	{
 		for ($i = 0; $i < Population::$size; $i++)
 	    {
@@ -18,7 +18,7 @@ class Population
 	        $this->fit_percent[$i] = 0;
 	    }
 	    
-	    $this->fit_goal = strlen($msg);
+	    $this->fit_goal = $size;
 	    $this->fit_total = 0;
 	}
 
