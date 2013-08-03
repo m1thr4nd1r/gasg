@@ -21,42 +21,34 @@ class Population
 	    $this->fit_total = 0;
 	}
 
+	function order()
+	{
+		usort($this->nodes, array("Node", "populationSort"));
+	}
+	
 	function start($msg)
 	{
 	    for ($i = 0; $i < Population::$size; $i++)
 	    {
-	        $this->nodes[$i] = new Node($msg);
+	        $this->nodes[$i] = new Node(strlen($msg));
 	        $this->nodes[$i]->calculaFitness($msg);
 	        $this->fit_total += $this->nodes[$i]->fitness;
 	    }
-	    for ($i = 0; $i < Population::$size; $i++)
-	        $this->fit_percent[$i] = round (((float) ($this->nodes[$i]->fitness * 100)) / $this->fit_total);
+	    if ($this->fit_total != 0)
+	    	for ($i = 0; $i < Population::$size; $i++)
+		        $this->fit_percent[$i] = round (((float) ($this->nodes[$i]->fitness * 100)) / $this->fit_total);
 	}
-
-
-	function personSort( $a, $b ) {
-    return $a->age == $b->age ? 0 : ( $a->age > $b->age ) ? 1 : -1;
-}
-
-	function populationSort($a,$b)
-	{
-		$a->fitness > $b->fitness ? 0 : 1;
-	}
-
-	function order()
-	{
-		usort( $this->nodes, 'populationSort');
-	}
-
-	function update()
+	
+	function refresh($msg)
 	{
 	    for ($i = 0; $i < Population::$size; $i++)
 	    {
-	        $this->nodes[$i]->fitness = $this->calculaFitness($nodes[$i]);
+	        $this->nodes[$i]->calculaFitness($msg);
 	        $this->fit_total += $this->nodes[$i]->fitness;
 	    }
-	    for ($i = 0; $i < Population::$size; $i++)
-	        $this->fit_percent[$i] = round (((float) ($this->nodes[$i]->fitness * 100)) / $this->fit_total);
+	    if ($this->fit_total != 0)
+		    for ($i = 0; $i < Population::$size; $i++)
+		        $this->fit_percent[$i] = round (((float) ($this->nodes[$i]->fitness * 100)) / $this->fit_total);
 	}
 }
 

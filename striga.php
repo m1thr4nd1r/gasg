@@ -5,106 +5,101 @@ include "population.php";
 function processIO($value)
 {
 	$size = strlen($value);
-
-    $population = new Population($size);
-    
-    $population->start($value);
-    
-    $population->order();
-    
-    $count = GA($population, $size) + 1;
-    
-    $population->pop[0]->write();
-    
-    echo "Geracao: " . $count . " Fitness: " . $population->pop[0]->fitness . "/n";
-    
-    echo "------------------------- /n  Configuracao Final /n";
-
-    echo $population->pop[0]->text;
+	
+	do 
+	{
+	    $population = new Population($size);
+	    
+	    $population->start($value);
+	    
+	    $population->order();
+	    
+	}while ($population->nodes[0]->fitness == 0);
+	
+    $count = GA($population, $value, $size) + 1;
     
     return 0;	
 }
 
 function reproduce($parents,$size)
 {
-    $child = new Node();
+    $child = new Node($size);
 
-    $c = rand($size);
+    $c = rand(0,$size);
     
     for ($i = 0; $i < $size; $i++)
-        $child->text[$i] = ($i < $c+1)? $parents[0]->board[$i] : $parents[1]->board[$i]; 
+        $child->text[$i] = ($i < $c)? $parents[0]->text[$i] : $parents[1]->text[$i]; 
         
     return $child;
 }
 
-function random_selection($p)
+function random_selection($nodes)
 {
-    $selected = array();
+//     $selected = array();
 
-    while (true)
-    {
-        $percent = abs((float)rand()/((float)getrandmax()/100));
+//    	$choice = rand(count($nodes));
+    
+//    	$selected[0] = $nodes[$choice];
+   	
+//     unset($nodes[$choice]);
+    
+//     $choice = rand(count($nodes));
+    
+//     $selected[1] = $nodes[$choice];
 
-        if ($percent < $p->fit_percent[3])
-            $selected[0] = $p->pop[3];
-        else if ($percent < ($p->fit_percent[2] + $p->fit_percent[3]))  
-            $selected[0] = $p->pop[2];
-        else if ($percent < $p->fit_percent[1] + $p->fit_percent[2] + $p->fit_percent[3])  
-            $selected[0] = $p->pop[1];
-        else 
-            $selected[0] = $p->pop[0];
-        
-        $percent = abs((float)rand()/((float)getrandmax()/100));
-
-        if ($percent < $p->fit_percent[3])
-            $selected[1] = $p->pop[3];
-        else if ($percent < ($p->fit_percent[2] + $p->fit_percent[3]))  
-            $selected[1] = $p->pop[2];
-        else if ($percent < ($p->fit_percent[1] + $p->fit_percent[2] + $p->fit_percent[3]))  
-            $selected[1] = $p->pop[1];
-        else 
-            $selected[1] = $p->pop[0];
-        
-        if ($selected[0] != $selected[1])
-            return $selected;
-        else
-            $percent = abs((float)rand()/((float)getrandmax()/100));
-    }
+	$choice = rand(0, count($nodes) - 1);
+	
+	unset($nodes[$choice]);
+	
+	$choice = rand(0, count($nodes) - 1);
+	
+	unset($nodes[$choice]);
+	
+	return $nodes;
 }
 
-function GA($pop, $size)
+function printPop($node, $gen)
+{
+	echo $node->text . " Geracao: " . $gen . " Fitness: " . $node->fitness . "\n";
+}
+
+function GA($pop, $msg, $size)
 {	
 	do
 	{
 		$gen = 1;
-		echo $pop->nodes[0]->text . "Geracao: " . $gen . " Fitness: " . $pop->nodes[0]->fitness . "\n";
-
+		
+		printPop($pop->nodes[0],$gen);
+			
 		$new_pop = new Population($size);
 
 		for ($i = 0; $i < Population::$size; $i++)
         {
-            $parents = random_selection($p);
-            $child = reproduce($parents,$size);
+            $parents = random_selection($pop->nodes);
+            $child = reproduce($parents,$size); // Alguma coisa errada com o child? Muita child em branco
             
-            $new_p->pop[$i] = $child;
-        }
-
-        for ($i = 0; $i < Population::$size; $i++)
             for ($j = 0; $j < $size; $j++)
             {
-                $chance = (float) rand() / getrandmax();
-                if($chance < 0.015) // 0.015 = Taxa de Mutação
-                    $new_p->pop[$i]->text[$j] = rand($size);
+            	$chance = (float) rand() / getrandmax();
+            	if($chance < 0.015) // 0.015 = Taxa de Mutação
+            		$child->text[$j] = chr(rand(32,126))[0];
             }
+            
+            $new_pop->nodes[$i] = $child;
+        }
         
-        $new_p->update();
+        $new_pop->refresh($value);
         
-        $pop = $new_p;
+        $pop = $new_pop;
         
-        order($pop);
+        $pop->order();
         
-    }while($p->pop[0]->fitness < $size);
-
+    }while($pop->nodes[0]->fitness < $size);
+    
+    echo "------------------------- \n  Configuracao Final \n";
+    
+    printPop($pop->nodes[0],$gen);
+    
     return $generation;
 }
 
