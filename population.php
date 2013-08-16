@@ -17,7 +17,6 @@ class Population
 	        $this->fit_percent[$i] = 0;
 	    }
 	    
-	    $this->fit_goal = $size;
 	    $this->fit_total = 0;
 	}
 
