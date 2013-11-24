@@ -6,6 +6,8 @@ function processIO($value)
 {
 	$size = strlen($value);
 	
+    var_dump($size);
+
     $population = new Population($size);
     
     $population->start($value);

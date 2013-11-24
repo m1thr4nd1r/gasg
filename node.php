@@ -21,8 +21,9 @@ class Node
 	    $this->fitness = 0;
 	    $size = strlen($this->text);
 	    for ($i = 0; $i < $size; $i++)
- 			if ($this->text[$i] != $text[$i])	
- 				$this->fitness++;
+	    	$this->fitness = abs($this->text[$i] - $text[$i]);
+ 			// if ($this->text[$i] != $text[$i])	
+ 			// 	$this->fitness++;
 	}
 	
 	function populationSort($a,$b)
