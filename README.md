@@ -1,5 +1,4 @@
-##Genetic Algorithm for String Generation
-=======
+Genetic Algorithm for String Generation
 
 The idea behind this project is to use genetic algorithms to generate a string given by the user. It has some configuration files included, that are needed by heroku, and was initially writen on PHP, although a NodeSQL migration were in the works.
 
